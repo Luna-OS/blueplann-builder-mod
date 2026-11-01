@@ -1,0 +1,7 @@
+{
+	"required": true,
+	"package": "dev.blueprintplanner.autotest.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": ["GlBackendTestMixin"],
+	"injectors": { "defaultRequire": 1 }
+}

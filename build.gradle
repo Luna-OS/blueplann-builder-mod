@@ -1,0 +1,97 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+version = project.version
+group = project.group
+
+base {
+	archivesName = 'blueprint-planner'
+}
+
+// Automated end-to-end test: a real dedicated server in its own process plus a client driven by
+// dev.blueprintplanner.autotest.AutoTestDriver. Started through scripts/autotest.sh.
+sourceSets {
+	autotest {
+		compileClasspath += main.compileClasspath + main.output
+		runtimeClasspath += main.runtimeClasspath + main.output
+	}
+}
+
+loom {
+	mods {
+		"blueprintplanner" {
+			sourceSet sourceSets.main
+		}
+		"blueprintplanner-autotest" {
+			sourceSet sourceSets.autotest
+		}
+	}
+
+	runs {
+		autotest {
+			client()
+			name = "Autotest"
+			source sourceSets.autotest
+			runDir = "build/run/autotest"
+			vmArg "-Dblueprintplanner.autotest=true"
+			programArgs "--username", "Tester"
+		}
+	}
+}
+
+repositories {
+	// compile-only APIs of mods the planner has compatibility hooks for
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "Modrinth"
+				url = "https://api.modrinth.com/maven"
+			}
+		}
+		filter {
+			includeGroup "maven.modrinth"
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// optional: only compiled against, the hooks are skipped when the mod is not installed
+	compileOnly("maven.modrinth:distanthorizons:${project.distanthorizons_version}") {
+		transitive = false
+	}
+	compileOnly("maven.modrinth:bobby:${project.bobby_version}") {
+		transitive = false
+	}
+}
+
+processResources {
+	def version = project.version
+	// the end-to-end test makes the optional compat hooks mandatory, so a hook that misses its target fails loudly
+	def compatRequire = project.hasProperty("strictCompat") ? 1 : 0
+	inputs.property "version", version
+	inputs.property "compatRequire", compatRequire
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+	if (compatRequire == 1) {
+		filesMatching("blueprintplanner.compat.mixins.json") {
+			filter { line -> line.replace('"defaultRequire": 0', '"defaultRequire": 1') }
+		}
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+	it.options.encoding = 'UTF-8'
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}

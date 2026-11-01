@@ -1,0 +1,12 @@
+{
+	"schemaVersion": 1,
+	"id": "blueprintplanner-autotest",
+	"version": "1.0.0",
+	"name": "Blueprint Planner Autotest",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["dev.blueprintplanner.autotest.AutoTestDriver"]
+	},
+	"mixins": ["blueprintplanner-autotest.mixins.json"],
+	"depends": { "blueprintplanner": "*" }
+}

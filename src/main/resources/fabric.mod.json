@@ -1,0 +1,20 @@
+{
+	"schemaVersion": 1,
+	"id": "blueprintplanner",
+	"version": "${version}",
+	"name": "Blueprint Planner",
+	"description": "Client-side planner sandbox with working redstone (a hidden vanilla server) plus a blueprint system to build your plans in the real world.",
+	"authors": ["Blueprint Planner"],
+	"license": "MIT",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["dev.blueprintplanner.BlueprintPlanner"]
+	},
+	"mixins": ["blueprintplanner.mixins.json", "blueprintplanner.compat.mixins.json"],
+	"depends": {
+		"fabricloader": ">=0.20.0",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
