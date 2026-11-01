@@ -1,0 +1,39 @@
+{
+	"required": true,
+	"package": "dev.blueprintplanner.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"ArrayBackedEventMixin",
+		"BlockItemInvoker",
+		"ChanneledNetworkAddonAccessor",
+		"ChunkHolderAccessor",
+		"ClientCommonPacketListenerAccessor",
+		"ClientCommonPacketListenerImplMixin",
+		"ClientConfigurationPacketListenerImplMixin",
+		"ClientHandshakePacketListenerAccessor",
+		"ClientHandshakePacketListenerImplMixin",
+		"ClientLevelAccessor",
+		"ClientLevelMixin",
+		"ClientLoginNetworkAddonAccessor",
+		"ClientPacketListenerMixin",
+		"ConnectionMixin",
+		"FabricClientNetworkAddonMixin",
+		"FabricEventMixin",
+		"FabricServerNetworkAddonMixin",
+		"GenerationChunkHolderMixin",
+		"GuiMixin",
+		"IntegratedServerMixin",
+		"LevelExtractorMixin",
+		"LivingEntityMixin",
+		"MinecraftInvoker",
+		"MinecraftMixin",
+		"MouseHandlerMixin",
+		"OptionsAccessor",
+		"PacketProcessorMixin",
+		"ServerCommonPacketListenerImplMixin",
+		"ToastManagerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
